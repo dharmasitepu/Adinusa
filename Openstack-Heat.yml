@@ -1,0 +1,83 @@
+heat_template_version: "2018-08-31"
+description: "version 2017-09-01 created by HOT Generator at Tue, 31 Aug 2021 06:08:08 GMT."
+resources: 
+  Net_1: 
+    type: "OS::Neutron::Net"
+    properties: 
+      admin_state_up: true
+      name: "heat-network-16"
+      port_security_enabled: true
+    depends_on: 
+      - Port_1
+      - Subnet_1
+  Subnet_1: 
+    type: "OS::Neutron::Subnet"
+    properties: 
+      name: "heat-subnet-16"
+      network: "9155488f-c457-4cc0-9d7e-dbdec560a19d"
+      ip_version: 4
+      cidr: "172.28.16.0/24"
+      enable_dhcp: true
+    depends_on: 
+      - Net_1
+      - Server_1
+  Net_3: 
+    type: "OS::Neutron::Net"
+    properties: 
+      admin_state_up: true
+      name: "external-net-16"
+      shared: true
+    depends_on: 
+      - Port_2
+  Port_1: 
+    type: "OS::Neutron::Port"
+    properties: 
+      admin_state_up: true
+      fixed_ips: 
+        - ip_address: "172.28.16.10"
+          subnet: "88ab15e1-946d-4562-9cf5-1773c3685a3d"
+      security_groups: 
+        - "0700e671-c5b5-4725-a592-126f9796f836"
+      name: "int-to-router"
+      network: "9155488f-c457-4cc0-9d7e-dbdec560a19d"
+      port_security_enabled: true
+    depends_on: 
+      - Router_1
+      - Net_1
+  Port_2: 
+    type: "OS::Neutron::Port"
+    properties: 
+      admin_state_up: true
+      fixed_ips: 
+        - ip_address: "20.16.16.2"
+          subnet: "88ab15e1-946d-4562-9cf5-1773c3685a3d"
+      security_groups: 
+        - "0700e671-c5b5-4725-a592-126f9796f836"
+      name: "ext-to-router"
+      network: "9155488f-c457-4cc0-9d7e-dbdec560a19d"
+      port_security_enabled: true
+    depends_on: 
+      - Router_1
+      - Net_3
+  Router_1: 
+    type: "OS::Neutron::Router"
+    properties: 
+      name: "heat-router-16"
+      admin_state_up: true
+    depends_on: 
+      - Port_2
+  Server_1: 
+    type: "OS::Nova::Server"
+    properties: 
+      security_groups: 
+        - "0700e671-c5b5-4725-a592-126f9796f836"
+      networks: 
+        - allocate_network: auto
+        - allocate_network: auto
+      name: "heat-instance-16"
+      flavor: "small-16"
+      image: "eb6cabb8-2846-4685-92f9-9c68b92cb3af"
+      availability_zone: nova
+      key_name: "heat-key-16"
+    depends_on: 
+      - Subnet_1
