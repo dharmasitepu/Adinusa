@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+spec:
+  replicas: 1
+  selector: ...
+  template:
+    metadata: ...
+    spec:
+      containers:
+        - name: nginx-ingress-controller
+          image: k8s.gcr.io/ingress-nginx/controller:v1.0.0-alpha.2@sha256:04a0ad3a1279c2a58898e789eed767eafa138ee1e5b9b23a988c6e8485cf958d
+          args: ...

@@ -1,0 +1,14 @@
+username Adinusa : dharma
+Nama lengkap	 : Dharma Agung Sitepu
+password default : yho2rIw/ZJKqvwxUXx
+
+ssh student@lab5.btech.id -p 10331
+ssh student@lab5.btech.id -p 10332
+
+Password : 123@Dharma
+pod33-docker-lab1 : 10.33.33.10 <<Port>> 10331 <<POD>> 33
+pod33-docker-lab2 : 10.33.33.20 <<Port>> 10332 <<POD>> 33
+
+git remote add origin https://github.com/dharmasitepu/javahelloworld.git
+
+

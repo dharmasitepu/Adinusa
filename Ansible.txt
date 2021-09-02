@@ -1,0 +1,31 @@
+pod25-controller  10.25.25.10	ssh root@lab5.btech.id -p10251  123@Agung
+pod25-managed1    10.25.25.20	ssh root@lab5.btech.id -p10252	123@Agung
+pod25-managed2    10.25.25.30	ssh root@lab5.btech.id -p10253	123@Agung
+
+hostname pod-dharma-controller
+echo 'pod-dharma-controller' > /etc/hostname
+hostname pod-dharma-managed2
+echo 'pod-dharma-managed2' > /etc/hostname
+
+
+10.25.25.10 pod-dharma-controller
+10.25.25.20 pod-dharma-managed1
+10.25.25.30 pod-dharma-managed2
+
+ping -c 2 pod-dharma-controller
+ping -c 2 pod-dharma-managed1
+ping -c 2 pod-dharma-managed2
+
+echo "root ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/root
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@pod-dharma-managed1
+
+ssh dharma@pod-dharma-controller "whoami; hostname"
+ssh dharma@pod-dharma-managed2 "whoami; hostname"
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub dharma@pod-username-controller
+ssh-copy-id -i ~/.ssh/id_rsa.pub dharma@pod-username-managed1
+
+ansible localhost --become -u dharma -m copy -a "content='Executed by Ansible\n' dest=/etc/motd"
+
+ansible localhost -u dharma -m command -a 'cat /etc/motd'

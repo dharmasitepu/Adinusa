@@ -1,0 +1,16 @@
+
+
+
+openstack network create  net-172
+openstack subnet create --network net-172 --allocation-pool start=172.16.16.10,end=172.16.16.254 --dns-nameserver 8.8.8.8 --gateway  172.16.16.1 --subnet-range 172.16.16.0/24 subnet-172
+
+openstack port create --network net-172 --fixed-ip \
+subnet=subnet-172,ip-address=172.16.16.100 server1-port0
+
+openstack floating ip create --floating-ip-address 20.16.16.20 net-172
+
+openstack server create --flavor medium-16 --image bionic-16 --key-name controller-key-16 --security-group mysecgroup-16 --network net-172  ubuntu-ins1-16
+
+openstack server add floating ip ubuntu-ins1-16 20.16.16.20
+
+ M4EihuAAO7btoBjXhqoLPmHeHAwSuUeStuYZFa9S
